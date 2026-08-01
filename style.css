@@ -1,0 +1,157 @@
+/* 全体の基本設定 */
+body { margin: 0; font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; color: #333; background-color: #fff; }
+.container { display: flex; min-height: 100vh; }
+
+h1{ line-height: 25%; }
+
+/* 左側サイドバー（PC用） */
+.sidebar { width: 300px; padding: 60px 40px; position: fixed; height: 100vh; border-right: 1px solid #f0f0f0; box-sizing: border-box; overflow-y: auto; background-color: #fff;}
+.logo { font-size: 1.2rem; margin-bottom: 60px; font-weight: normal; letter-spacing: 0.1em; }
+.logo a { text-decoration: none; color: inherit; }
+.nav-links { list-style: none; padding: 0; margin: 0; }
+.nav-links li { margin-bottom: 12px; }
+.nav-category { display: block; color: #333; font-size: 0.95rem; font-weight: normal; letter-spacing: 0.05em; margin-bottom: 10px; cursor: default; }
+.nav-links a { text-decoration: none; color: #888; font-size: 0.95rem; transition: color 0.3s ease; display: block; }
+.nav-links a:hover { color: #111; }
+.sub-nav { list-style: none; padding-left: 15px; margin-top: 10px; margin-bottom: 20px; }
+.sub-nav li { margin-bottom: 10px; }
+.sub-nav a { font-size: 0.85rem; color: #aaa; }
+.mt-20 { margin-top: 20px; }
+
+/* 右側メインコンテンツ（PC用） */
+.content { margin-left: 300px; padding: 60px 40px; flex-grow: 1; box-sizing: border-box; }
+.content-section { display: none; }
+#dynamic-content { display: block; }
+.top-main-visual { width: 100%; max-width: 900px; margin: 0 auto; }
+.top-main-visual img { width: 100%; height: auto; max-height: 80vh; object-fit: contain; display: block; }
+
+/* グリッドレイアウト */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
+.card { display: flex; flex-direction: column; }
+.card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; cursor: pointer; transition: opacity 0.3s ease; }
+.card img:hover { opacity: 0.85; }
+
+/* ブログの文字デザイン */
+.card-title { font-size: 1rem; margin: 8px 0; font-weight: normal; }
+.card-date { font-size: 0.8rem; color: #aaa; letter-spacing: 0.05em; }
+.blog-single { max-width: 650px; margin: 0; }
+.blog-single-title { font-size: 1.4rem; font-weight: normal; margin: 12px 0 40px 0; line-height: 1.4; }
+.blog-single-body { line-height: 1.8; font-size: 0.95rem; }
+.blog-single-body img { max-width: 100%; height: auto; margin: 20px 0; }
+
+/* スマートフォン用レイアウト (横幅768px以下) */
+.mobile-header { display: none; } /* PCでは隠す */
+
+@media (max-width: 768px) {
+    .container { display: block; }
+    
+    /* スマホ用ヘッダーを表示 */
+    .mobile-header {
+        display: flex; justify-content: space-between; align-items: center;
+        position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+        background-color: rgba(255, 255, 255, 0.95); z-index: 1000;
+        padding: 0 20px; box-sizing: border-box; border-bottom: 1px solid #f0f0f0;
+    }
+    .mobile-logo { font-size: 1.1rem; margin: 0; font-weight: normal; letter-spacing: 0.1em; }
+    .mobile-logo a { text-decoration: none; color: #333; }
+
+    /* ハンバーガーアイコン */
+    .hamburger { width: 24px; height: 16px; cursor: pointer; position: relative; z-index: 1001; }
+    .hamburger span { display: block; position: absolute; width: 100%; height: 1px; background-color: #333; transition: 0.3s; }
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 7px; }
+    .hamburger span:nth-child(3) { top: 14px; }
+    
+    /* ハンバーガーが「×」になる動き */
+    .hamburger.open span:nth-child(1) { top: 7px; transform: rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+    /* サイドバーを画面外（左側）に隠す */
+    .sidebar {
+        transform: translateX(-100%); transition: transform 0.3s ease;
+        width: 80%; max-width: 300px; z-index: 999;
+        padding-top: 80px; /* ヘッダー分下げる */
+        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+    }
+    .sidebar.open { transform: translateX(0); } /* メニューを開いた時 */
+    .sidebar .logo { display: none; } /* PC用のロゴはスマホでは消す */
+
+    /* メインコンテンツの余白調整 */
+    .content { margin-left: 0; padding: 80px 20px 40px; }
+
+    /* 写真のサイズをスマホ用に調整 */
+    .grid { gap: 15px; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+}
+
+/* ★変更：写真拡大用モーダルとボタンの新しいスタイル */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.97);
+}
+
+/* 画像とナビゲーションを縦に並べるコンテナ */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 60px 20px 20px; /* 上下に余白を設定 */
+    box-sizing: border-box;
+}
+
+.modal img {
+    max-width: 100%;
+    max-height: calc(100% - 60px); /* ナビゲーション用のスペースを空ける */
+    object-fit: contain;
+    cursor: default;
+    margin-bottom: 20px; /* 写真の下に余白を設定 */
+}
+
+/* ★追加：写真の下に配置するナビゲーションボタンのスタイル */
+.modal-nav {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* ボタン同士のすき間 */
+    width: 100%;
+}
+
+.nav-btn {
+    cursor: pointer;
+    color: #ccc;
+    font-weight: 200;    /* ★数字を小さくして、線を極細にします */
+    font-size: 20px;     /* ★矢印のサイズをすっきりした大きさに調整します */
+    transition: 0.3s;
+    user-select: none;
+}
+
+.nav-btn:hover {
+    color: #333;
+}
+
+/* 左右の矢印ボタンの個別配置を削除 */
+.prev, .next { position: static; transform: none; padding: 0; }
+
+/* 右上の閉じるボタン(×) */
+.close-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: #ccc;
+    font-size: 40px;
+    font-weight: normal;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 2001;
+}
+
+.close-btn:hover {
+    color: #333;
+}

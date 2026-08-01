@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ぎょうぶの戯言</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="mobile-header">
+        <h1 class="mobile-logo"><a href="#" onclick="showTopPage(); return false;">ぎょうぶの戯言</a></h1>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h1 class="logo"><a href="#" onclick="showTopPage(); return false;"><p>ぎょうぶの戯言</p></a></h1>
+            <nav>
+                <ul class="nav-links">
+                    <li>
+                        <span class="nav-category">写真</span>
+                        <ul class="sub-nav">
+                            <li><a href="#" onclick="loadSection('umi.html'); return false;">うみ</a></li>
+                            <li><a href="#" onclick="loadSection('data-seikatsu.html'); return false;">せいかつ</a></li>
+                        </ul>
+                    </li>
+                    <!-- 「なんかひとりごと」の項目は削除しました -->
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <div id="loading" style="display: none;">読み込み中...</div>
+            
+            <div id="dynamic-content" class="content-section">
+                <div id="content-grid">
+                    <div class="top-main-visual">
+                        <img src="images/top.jpg" alt="Top Image">
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <!-- モーダル部分 -->
+    <div id="photo-modal" class="modal" onclick="closeModal(event)">
+        <span class="close-btn" onclick="closeModal(event, true)">&times;</span>
+        
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="">
+            
+            <div class="modal-nav">
+                <span class="nav-btn prev" onclick="changePhoto(-1, event)">←</span>
+                <span class="nav-btn next" onclick="changePhoto(1, event)">→</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
